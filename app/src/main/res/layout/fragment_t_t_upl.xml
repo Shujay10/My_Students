@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".uplFragments.timetable.TTUplFragment">
+
+    <TextView
+        android:id="@+id/ttStaus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <Spinner
+        android:id="@+id/ttClassSel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/ttFilpath"
+        app:layout_constraintEnd_toEndOf="@+id/ttStaus"
+        app:layout_constraintStart_toStartOf="@+id/ttStaus"
+        app:layout_constraintTop_toBottomOf="@+id/ttStaus" />
+
+    <Button
+        android:id="@+id/ttFilpath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_file"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ttStaus"
+        app:layout_constraintStart_toStartOf="@+id/ttStaus"
+        app:layout_constraintTop_toBottomOf="@+id/ttStaus"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <Button
+        android:id="@+id/ttUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ttFilpath"
+        app:layout_constraintStart_toStartOf="@+id/ttFilpath"
+        app:layout_constraintTop_toBottomOf="@+id/ttFilpath" />
+
+    <ProgressBar
+        android:id="@+id/ttProbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
