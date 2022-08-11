@@ -1,4 +1,4 @@
-package com.example.mystudents.ui.home;
+package com.example.mystudents.ui.homework;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -10,12 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,22 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mystudents.Faculty;
 import com.example.mystudents.R;
 import com.example.mystudents.adapters.AddHomeRvAdapter;
-import com.example.mystudents.databinding.FragmentHomeBinding;
+import com.example.mystudents.databinding.FragmentHomeworkBinding;
 import com.example.mystudents.struct.HomeStruct;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeWorkFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentHomeworkBinding binding;
     private FirebaseDatabase mData;
 
     Dialog homeData;
@@ -67,7 +61,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHomeworkBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         mData = FirebaseDatabase.getInstance();
