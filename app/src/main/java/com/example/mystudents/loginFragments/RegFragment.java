@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,12 +21,17 @@ import android.widget.Toast;
 import com.example.mystudents.R;
 import com.example.mystudents.activities.RegisterActivity;
 import com.example.mystudents.databinding.FragmentRegBinding;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.safetynet.SafetyNet;
+import com.google.android.gms.safetynet.SafetyNetApi;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class RegFragment extends Fragment {
+public class RegFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks {
 
     private FragmentRegBinding binding;
 
@@ -36,6 +43,11 @@ public class RegFragment extends Fragment {
 
     FirebaseFirestore mStore;
 
+    GoogleApiClient googleApiClient;
+    CheckBox checkBox;
+    private String siteKey = "6Ld3cLgjAAAAACSmKqhbYXEN4jt_EHLXGGSV1bxw";
+    private boolean isVerified = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,16 +57,45 @@ public class RegFragment extends Fragment {
         submit = root.findViewById(R.id.subPass);
         passIn = root.findViewById(R.id.regPass);
         contact = root.findViewById(R.id.gmail);
+        checkBox = root.findViewById(R.id.checkBox);
 
         mStore = FirebaseFirestore.getInstance();
 
+        googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(SafetyNet.API)
+                .addConnectionCallbacks(RegFragment.this)
+                .build();
+        googleApiClient.connect();
         findPass();
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkBox.isChecked()){
+                    SafetyNet.SafetyNetApi.verifyWithRecaptcha(googleApiClient,siteKey)
+                            .setResultCallback(new ResultCallback<SafetyNetApi.RecaptchaTokenResult>() {
+                                @Override
+                                public void onResult(@NonNull SafetyNetApi.RecaptchaTokenResult recaptchaTokenResult) {
+                                    Status stat = recaptchaTokenResult.getStatus();
+
+                                    if((stat != null) && stat.isSuccess()){
+                                        toast("Verified");
+                                        isVerified = true;
+                                    }
+                                }
+                            });
+                } else{
+                    toast("Not Verified");
+                    isVerified = false;
+                }
+            }
+        });
 
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String gmil = contact.getText().toString();
-                System.out.println(gmil);
+                //System.out.println(gmil);
                 setClipboard(getContext(),gmil);
             }
         });
@@ -71,17 +112,17 @@ public class RegFragment extends Fragment {
             public void onClick(View view) {
 
                 String pass = passIn.getText().toString();
-                System.out.println(pass);
 
-                System.out.println(passWord+" from db");
-
-                // TODO : change the condition
-                if(pass.equals(passWord)){
-                    //if(true){
+                // TODO : check the condition
+                if(pass.equals(passWord) && isVerified){
                     Intent intent = new Intent(getContext(), RegisterActivity.class);
                     startActivity(intent);
+                }else if (!pass.equals(passWord) && isVerified){
+                    toast("Incorrect Password");
+                }else if(pass.equals(passWord) && !isVerified){
+                    toast("Please Verify");
                 }else {
-                    System.out.println("Error");
+                    toast("Error");
                 }
 
             }
@@ -115,4 +156,17 @@ public class RegFragment extends Fragment {
 
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    void toast(String msg){
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+    }
 }

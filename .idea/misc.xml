@@ -16,6 +16,7 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_event_upload.xml" value="0.19" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_field.xml" value="0.1775" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_modify.xml" value="0.1725" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_recaptcha.xml" value="0.1895" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_upl_photos.xml" value="0.1725" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_upl_sheet.xml" value="0.1725" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/drawable/ic_upl_tt.xml" value="0.1725" />
@@ -33,6 +34,9 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/addhome_dialog.xml" value="0.284375" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/app_bar_main.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/caution_dialog.xml" value="0.27447916666666666" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/cgclass_dialog.xml" value="0.271875" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/class_view.xml" value="0.27291666666666664" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/classes_recycler.xml" value="0.1" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/content_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/event_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_data_mod_upl.xml" value="0.27291666666666664" />
@@ -40,6 +44,7 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_event.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_faculty_mod.xml" value="0.1" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_home.xml" value="0.27291666666666664" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_homework.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_log_in.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_modify.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_reg.xml" value="0.27447916666666666" />
@@ -53,6 +58,7 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_teach_upl.xml" value="0.264" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_timetable.xml" value="0.1" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/fragment_uplink.xml" value="0.27291666666666664" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/friday_fragment.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/getfac_dialog.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/getid_dialog.xml" value="0.2557291666666667" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/getschool_dialog.xml" value="0.27447916666666666" />
@@ -63,7 +69,7 @@
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/recycler_event.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/reg_recycler.xml" value="0.26851851851851855" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/stutea_dialog.xml" value="0.27291666666666664" />
-        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/time_table_fragment.xml" value="0.1" />
+        <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/time_table_fragment.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/layout/uplink_recycler.xml" value="0.27291666666666664" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
         <entry key="..\:/Extra Stuff/Android Studio/School Project/Admin/app/src/main/res/menu/main.xml" value="0.17447916666666666" />

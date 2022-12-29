@@ -13,6 +13,7 @@ public class Faculty {
     static String phoNoP;
     static String level;
     static String dob;
+    static String ttClass;
     static int pass = -99;
 
     @NonNull
@@ -102,5 +103,13 @@ public class Faculty {
 
     public static void setDob(String dob) {
         Faculty.dob = dob;
+    }
+
+    public static String getTtClass() {
+        return ttClass;
+    }
+
+    public static void setTtClass(String ttClass) {
+        Faculty.ttClass = ttClass;
     }
 }

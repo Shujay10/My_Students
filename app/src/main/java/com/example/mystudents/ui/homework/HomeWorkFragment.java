@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class HomeWorkFragment extends Fragment {
@@ -82,7 +84,6 @@ public class HomeWorkFragment extends Fragment {
         isTest = homeData.findViewById(R.id.isTest);
         work = homeData.findViewById(R.id.work);
         add = homeData.findViewById(R.id.addHome);
-
         setAdapter();
 
         addHome.setOnClickListener(new View.OnClickListener() {
@@ -122,18 +123,14 @@ public class HomeWorkFragment extends Fragment {
         switch (clas){
 
             case "None":{
-
                 list.clear();
                 adapter.notifyDataSetChanged();
-
                 break;
             }
             case "All":{
 
                 for(int i=-1;i<13;i++){
-
                     String val = new String();
-
                     if(i==-1){
                         val = "UKG";
                     }else if(i == 0){
