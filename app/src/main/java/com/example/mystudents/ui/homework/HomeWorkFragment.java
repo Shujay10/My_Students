@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -40,7 +41,7 @@ public class HomeWorkFragment extends Fragment {
     Dialog homeData;
     Spinner grade;
     Spinner subject;
-    RadioButton isTest;
+    CheckBox isTest;
     EditText work;
     Button add;
 
