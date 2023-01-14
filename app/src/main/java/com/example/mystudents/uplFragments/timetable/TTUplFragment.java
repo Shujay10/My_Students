@@ -24,9 +24,7 @@ import com.example.mystudents.Faculty;
 import com.example.mystudents.R;
 import com.example.mystudents.activities.UplSwitchActivity;
 import com.example.mystudents.databinding.FragmentTTUplBinding;
-import com.example.mystudents.databinding.FragmentTeachUplBinding;
-import com.example.mystudents.struct.ClassStruct;
-import com.example.mystudents.struct.StaffStruct;
+import com.example.mystudents.struct.TimeTableStruct;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -198,7 +196,7 @@ public class TTUplFragment extends Fragment implements
         Cell cell;
 
         CellValue value;
-        ClassStruct upl;
+        TimeTableStruct upl;
 
         ArrayList<Integer> failed = new ArrayList();
         ArrayList<String> cla = new ArrayList();
@@ -246,7 +244,7 @@ public class TTUplFragment extends Fragment implements
             for(int m=1;m<9;m++)
                 cla.add(details[m]);
 
-            upl = new ClassStruct(details[0],cla);
+            upl = new TimeTableStruct(details[0],cla);
 
             boolean stat = true;
 
@@ -274,7 +272,7 @@ public class TTUplFragment extends Fragment implements
 
     }
 
-    private boolean uploadTeachers(ClassStruct temp){
+    private boolean uploadTeachers(TimeTableStruct temp){
 
         // TODO : return statement
 

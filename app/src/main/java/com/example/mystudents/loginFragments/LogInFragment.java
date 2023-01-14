@@ -1,6 +1,9 @@
 package com.example.mystudents.loginFragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import com.example.mystudents.MainActivity;
 import com.example.mystudents.R;
 import com.example.mystudents.databinding.FragmentLogInBinding;
+import com.example.mystudents.struct.StoreStruct;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.io.OutputStreamWriter;
 import java.util.concurrent.Executor;
@@ -124,21 +129,10 @@ public class LogInFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                //String name = (String) documentSnapshot.get("name");
                 String email1 = (String) documentSnapshot.get("email");
-                //String phonePr = (String) documentSnapshot.get("phonePrimary");
-                //String parNts = (String) documentSnapshot.get("parentName");
-                //String grade = (String) documentSnapshot.get("grade");
-                //String phoneSc = (String) documentSnapshot.get("phoneSecondary");
-                //System.out.println(email1+"  "+name+" "+phonePr+" "+parNts+" "+phoneSc+" "+grade);
-
 
                 if(documentSnapshot.exists()){
-
-                    //putValue(name,email1,phonePr,phoneSc,parNts,grade);
                     putValue(email1);
-
-                    //Toast.makeText(getApplicationContext(),"Data Found Firestore",Toast.LENGTH_SHORT).show();
 
                 }else {
                     boolean isGood = false;
@@ -151,7 +145,6 @@ public class LogInFragment extends Fragment {
 
     }
 
-    //private void putValue(String name, String email1, String phonePr, String phoneSc, String parNts, String grade) {
     private void putValue(String email1) {
 
         System.out.println(email1 +" == "+getEmail());
@@ -163,32 +156,14 @@ public class LogInFragment extends Fragment {
 
         if(isGood){
 
-            //Student.name = name;
-            //Student.email = email1;
-            //Student.phoNoP = phonePr;
-            //Student.phoNoS = phoneSc;
-            //Student.ParentsName = parNts;
-            //Student.grade = grade;
+            StoreStruct userData = new StoreStruct(getRegNo(),getSchool());
+            Gson gson = new Gson();
 
-            try {
-
-                //OutputStreamWriter out= new OutputStreamWriter(openFileOutput("Store.txt", 0));
-                OutputStreamWriter out = new OutputStreamWriter(getActivity().openFileOutput("FacStore.txt",0));
-                out.write(getRegNo()+":"+getSchool());
-
-                out.close();
-
-                Toast.makeText(getContext(), "The contents are saved in the file.", Toast.LENGTH_LONG).show();
-                proBar.setVisibility(View.GONE);
-            }
-            catch (Throwable t) {
-
-                Toast.makeText(getContext(), "Exception: "+t.toString(), Toast.LENGTH_LONG)
-                        .show();
-
-            }
-
-            //Toast.makeText(getApplicationContext(),"To auth",Toast.LENGTH_SHORT).show();
+            String storeUser = gson.toJson(userData);
+            SharedPreferences prefs = getContext().getSharedPreferences("UserData", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("UserData",storeUser);
+            editor.apply();
             auth();
         }else {
             proBar.setVisibility(View.GONE);

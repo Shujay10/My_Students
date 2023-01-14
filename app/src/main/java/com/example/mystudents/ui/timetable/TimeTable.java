@@ -1,5 +1,6 @@
 package com.example.mystudents.ui.timetable;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,7 +47,6 @@ public class TimeTable extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
         binding = TimeTableFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -89,19 +89,82 @@ public class TimeTable extends Fragment{
         return root;
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void changeIcon() {
 
-        int res = R.drawable.ic_book;
+//        int res = R.drawable.ic_book;
+//
+//        classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_book));
+//        classChanger.setImageDrawable(getResources().getDrawable(res,getActivity().getTheme()));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            classChanger.setImageDrawable(getResources().getDrawable(res, getActivity().getTheme()));
-        } else {
-            classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_book));
+        switch (Faculty.getTtClass()){
+            case "1":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_1));
+                break;
+            }
+            case "2":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_2));
+                break;
+            }
+            case "3":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_3));
+                break;
+            }
+            case "4":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_4));
+                break;
+            }
+            case "5":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_5));
+                break;
+            }
+            case "6":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_6));
+                break;
+            }
+            case "7":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_7));
+                break;
+            }
+            case "8":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_8));
+                break;
+            }
+            case "9":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_9));
+                break;
+            }
+            case "10":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_10));
+                break;
+            }
+            case "11":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_11));
+                break;
+            }
+            case "12":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_12));
+                break;
+            }
+            case "UKG":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_ukg));
+                break;
+            }
+            case "LKG":{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_lkg));
+                break;
+            }
+            default:{
+                classChanger.setImageDrawable(getResources().getDrawable(R.drawable.ic_0));
+            }
         }
 
     }
 
     private void getGradeAdapter() {
+
+        setGradeList.add("LKG");
+        setGradeList.add("UKG");
 
         for(int i=1;i<13;i++) {
             setGradeList.add(String.valueOf(i));

@@ -1,10 +1,15 @@
 package com.example.mystudents.ui.homework;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,10 +30,14 @@ import com.example.mystudents.R;
 import com.example.mystudents.adapters.AddHomeRvAdapter;
 import com.example.mystudents.databinding.FragmentHomeworkBinding;
 import com.example.mystudents.struct.HomeStruct;
+import com.example.mystudents.struct.StoreStruct;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -48,7 +57,6 @@ public class HomeWorkFragment extends Fragment {
     FloatingActionButton addHome;
     RecyclerView viweHome;
     Spinner viewClass;
-    Button filter;
 
     ArrayAdapter viewClassAdapter;
     ArrayList<String> classList;
@@ -61,11 +69,14 @@ public class HomeWorkFragment extends Fragment {
     AddHomeRvAdapter adapter;
     ArrayList<HomeStruct> list;
 
+    Gson gson;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeworkBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        gson = new Gson();
 
         mData = FirebaseDatabase.getInstance();
         homeData = new Dialog(getActivity());
@@ -77,7 +88,6 @@ public class HomeWorkFragment extends Fragment {
         addHome = root.findViewById(R.id.homeAdd);
         viweHome = root.findViewById(R.id.homeWorkRV);
         viewClass = root.findViewById(R.id.classFil);
-        filter = root.findViewById(R.id.filter);
 
         homeData.setContentView(R.layout.addhome_dialog);
         grade = homeData.findViewById(R.id.selClass);
@@ -106,12 +116,14 @@ public class HomeWorkFragment extends Fragment {
             }
         });
 
-        filter.setOnClickListener(new View.OnClickListener() {
+        viewClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setView(classList.get(i));
+            }
 
-                String clas = viewClass.getSelectedItem().toString();
-                setView(clas);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
@@ -119,6 +131,7 @@ public class HomeWorkFragment extends Fragment {
         return root;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void setView(String clas) {
 
         switch (clas){
@@ -130,37 +143,38 @@ public class HomeWorkFragment extends Fragment {
             }
             case "All":{
 
-                for(int i=-1;i<13;i++){
-                    String val = new String();
-                    if(i==-1){
-                        val = "UKG";
-                    }else if(i == 0){
-                        val = "LKG";
-                    }else {
-                        val = String.valueOf(i);
-                    }
+                list.clear();
 
-                    list.clear();
+                for(int i=0;i<setGradeList.size();i++){
+                    String val ;
+                    val = setGradeList.get(i);
                     adapter.notifyDataSetChanged();
 
+                    int finalI = i;
                     mData.getReference(Faculty.getSchool()).child("Homework").child("Class_"+val).get()
                             .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                 @Override
                                 public void onSuccess(DataSnapshot dataSnapshot) {
+
                                     for (DataSnapshot ds : dataSnapshot.getChildren()){
 
                                         HomeStruct add = ds.getValue(HomeStruct.class);
                                         list.add(add);
-                                        adapter.notifyDataSetChanged();
 
                                     }
+
+                                    if (finalI == setGradeList.size()-1 ){
+
+                                        if(list.isEmpty())
+                                            toast("No HW");
+
+                                        adapter.notifyDataSetChanged();
+                                    }
+
                                 }
                             });
                 }
 
-                if(list.isEmpty()){
-                    toast("No HomeWork");
-                }
                 break;
             }
             default:{
@@ -177,14 +191,15 @@ public class HomeWorkFragment extends Fragment {
                                     HomeStruct add = ds.getValue(HomeStruct.class);
                                     list.add(add);
                                     adapter.notifyDataSetChanged();
-
                                 }
+
+                                if (list.isEmpty()){
+                                    toast("No HW");
+                                }
+
                             }
                         });
 
-                if(list.isEmpty()){
-                    toast("No HomeWork");
-                }
                 break;
             }
 
@@ -192,6 +207,7 @@ public class HomeWorkFragment extends Fragment {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void addWork() {
 
         HomeStruct upload;
@@ -206,21 +222,21 @@ public class HomeWorkFragment extends Fragment {
         list.add(upload);
         adapter.notifyDataSetChanged();
 
-//        mData.getReference().child(Faculty.getSchool()).child("Homework")
-//                .child("Class_"+grade).child(subject).setValue(upload)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//
-//                if(task.isSuccessful()){
-//                    clear();
-//                    toast("Added");
-//                    homeData.dismiss();
-//                }else {
-//                    toast("Problem");
-//                }
-//            }
-//        });
+        mData.getReference().child(Faculty.getSchool()).child("Homework")
+                .child("Class_"+grade).child(subject).setValue(upload)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if(task.isSuccessful()){
+                    clear();
+                    toast("Added");
+                    homeData.dismiss();
+                }else {
+                    toast("Problem");
+                }
+            }
+        });
 
     }
 
@@ -271,29 +287,31 @@ public class HomeWorkFragment extends Fragment {
 
         classList.add("None");
         classList.add("All");
-        setGradeList.add("LKG");
-        classList.add("LKG");
-        setGradeList.add("UKG");
-        classList.add("UKG");
 
-        for(int i=1;i<13;i++) {
-            setGradeList.add(String.valueOf(i));
-            classList.add(String.valueOf(i));
-        }
+        SharedPreferences prefs =  getContext().getSharedPreferences("UserData", MODE_PRIVATE);
+        String subDat = prefs.getString("Subjects","");
+        String claDat = prefs.getString("Classes","");
 
-        setSubList.add("Maths");
-        setSubList.add("English");
-        setSubList.add("Science");
-        setSubList.add("Hindi");
-        setSubList.add("Social");
-        setSubList.add("Computer");
-        // TODO : do a custome dialog
-        setSubList.add("Custom");
+        StoreStruct tr1 = gson.fromJson(subDat, StoreStruct.class);
+        StoreStruct tr2 = gson.fromJson(claDat, StoreStruct.class);
+
+        System.out.println(tr1);
+        System.out.println(tr2);
+
+        setGradeList.addAll(tr2.getClasses());
+        classList.addAll(tr2.getClasses());
+        setSubList.addAll(tr1.getSubject());
+
     }
 
     private void toast(String txt){
 
-        Toast.makeText(getActivity(),txt,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),txt,Toast.LENGTH_SHORT).show();
+    }
+
+    private void toastL(String txt){
+
+        Toast.makeText(getActivity(),txt,Toast.LENGTH_LONG).show();
     }
 
     @Override

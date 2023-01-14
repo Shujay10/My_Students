@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mystudents.Faculty;
 import com.example.mystudents.R;
 import com.example.mystudents.adapters.ClassesRvAdapter;
-import com.example.mystudents.struct.ClassStruct;
+import com.example.mystudents.struct.TimeTableStruct;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,13 +47,13 @@ public class SaturdayFragment extends Fragment {
 
     private void fetch_Data(){
 
-        mStore.collection("Shemford").document("Timetable")
+        mStore.collection(Faculty.getSchool()).document("Timetable")
                 .collection("Class "+Faculty.getTtClass()/* TODO : Class */).document("Saturday").get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        ClassStruct temp = documentSnapshot.toObject(ClassStruct.class);
+                        TimeTableStruct temp = documentSnapshot.toObject(TimeTableStruct.class);
                         if (temp != null) {
                             list = temp.getPeriods();
                         }

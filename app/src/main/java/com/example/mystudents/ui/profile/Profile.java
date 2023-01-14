@@ -1,8 +1,11 @@
 package com.example.mystudents.ui.profile;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,10 +22,12 @@ import android.widget.Toast;
 import com.example.mystudents.Faculty;
 import com.example.mystudents.R;
 import com.example.mystudents.databinding.ProfileFragmentBinding;
+import com.example.mystudents.struct.StoreStruct;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -36,6 +41,8 @@ public class Profile extends Fragment {
     TextView name,jbLevel,empid,email;
     TextView desi,field,phone,dob,school;
 
+    Gson gson;
+
     ProgressBar progressBar;
 
     FirebaseFirestore mStore;
@@ -47,6 +54,7 @@ public class Profile extends Fragment {
         View root = binding.getRoot();
 
         mStore = FirebaseFirestore.getInstance();
+        gson = new Gson();
 
         name = root.findViewById(R.id.proName);
         jbLevel = root.findViewById(R.id.proJBL);
@@ -70,28 +78,13 @@ public class Profile extends Fragment {
 
     private void getVal() throws FileNotFoundException {
 
-        try {
-            InputStream in = getActivity().openFileInput("FacStore.txt");
-            if (in != null) {
-                InputStreamReader tmp=new InputStreamReader(in);
-                BufferedReader reader=new BufferedReader(tmp);
-                String str;
-                StringBuilder buf=new StringBuilder();
+        SharedPreferences prefs =  getContext().getSharedPreferences("UserData", MODE_PRIVATE);
 
-                while ((str = reader.readLine()) != null) {
-                    buf.append(str);
-                }
-                in.close();
-                String get = buf.toString();
-                String[] splitting = get.split(":");
-                Faculty.setEmpid(splitting[0]);
-                Faculty.setSchool(splitting[1]);
-                //System.out.println(get);
-
-            }
-        } catch (Throwable e) {
-            //e.printStackTrace();
-        }
+        String usrDat = prefs.getString("UserData","");
+        StoreStruct tr1 = gson.fromJson(usrDat, StoreStruct.class);
+        System.out.println(tr1);
+        Faculty.setEmpid(tr1.getRegNo());
+        Faculty.setSchool(tr1.getSchool());
 
         String sch = Faculty.getSchool();
 

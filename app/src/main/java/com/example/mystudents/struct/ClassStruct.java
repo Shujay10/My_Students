@@ -4,31 +4,17 @@ import java.util.ArrayList;
 
 public class ClassStruct {
 
-    String day;
-    ArrayList<String> periods;
+    ArrayList <String> grade;
 
-    public ClassStruct() {
+    public ClassStruct(ArrayList<String> grade) {
+        this.grade = grade;
     }
 
-    public ClassStruct(String day, ArrayList<String> periods) {
-        this.day = day;
-        this.periods = periods;
+    public ArrayList<String> getGrade() {
+        return grade;
     }
 
-    public String getDay() {
-        return day;
+    public void setGrade(ArrayList<String> grade) {
+        this.grade = grade;
     }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public ArrayList<String> getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(ArrayList<String> periods) {
-        this.periods = periods;
-    }
-
 }
